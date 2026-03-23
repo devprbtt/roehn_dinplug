@@ -7,8 +7,8 @@
   "config_flow": true,
   "dependencies": ["http"],
   "documentation": "https://github.com/devprbtt/roehn_dinplug",
-  "issue_tracker": "https://github.com/devprbtt/roehn_dinplug/issues",
   "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/devprbtt/roehn_dinplug/issues",
   "requirements": [],
   "version": "0.1.0"
 }
