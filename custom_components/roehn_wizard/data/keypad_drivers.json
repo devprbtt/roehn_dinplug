@@ -1,0 +1,82 @@
+[
+  {
+    "_source_file": "AQL-K.json",
+    "modelBaseName": "AQL-K",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "",
+    "ModelID": 54,
+    "MaxButtons": 6
+  },
+  {
+    "_source_file": "AQL-L.json",
+    "modelBaseName": "AQL-L",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "KB-PRO",
+    "ModelID": 54,
+    "MaxButtons": 6
+  },
+  {
+    "_source_file": "AQL-P.json",
+    "modelBaseName": "AQL-P",
+    "FirmwareName": "",
+    "FirmwareExtendedName": "",
+    "ModelID": 54,
+    "MaxButtons": 6
+  },
+  {
+    "_source_file": "QuicklightKeypad.json",
+    "modelBaseName": "QuickLight",
+    "FirmwareName": "",
+    "FirmwareExtendedName": "",
+    "ModelID": 58,
+    "MaxButtons": 12
+  },
+  {
+    "_source_file": "RIR-K.json",
+    "modelBaseName": "RIR-K",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "R-ION",
+    "ModelID": 54,
+    "MaxButtons": 6
+  },
+  {
+    "_source_file": "RIS-K.json",
+    "modelBaseName": "RIS-K",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "R-ION",
+    "ModelID": 54,
+    "MaxButtons": 4
+  },
+  {
+    "_source_file": "RQR-K.json",
+    "modelBaseName": "RQR-K",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "R-QUA",
+    "ModelID": 54,
+    "MaxButtons": 4
+  },
+  {
+    "_source_file": "RQR-L.json",
+    "modelBaseName": "RQR-L",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "R-QUAL",
+    "ModelID": 54,
+    "MaxButtons": 4
+  },
+  {
+    "_source_file": "RQR-P.json",
+    "modelBaseName": "RQR-P",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "R-QUA",
+    "ModelID": 54,
+    "MaxButtons": 2
+  },
+  {
+    "_source_file": "Virtual.json",
+    "modelBaseName": "Virtual",
+    "FirmwareName": "STAP",
+    "FirmwareExtendedName": "",
+    "ModelID": 54,
+    "MaxButtons": 6
+  }
+]

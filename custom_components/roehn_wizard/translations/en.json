@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Roehn Wizard processor",
+        "data": {
+          "name": "Name",
+          "host": "Host",
+          "port": "Port",
+          "scan_interval": "Scan interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to processor",
+      "already_configured": "Processor is already configured",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Processor is already configured"
+    }
+  }
+}

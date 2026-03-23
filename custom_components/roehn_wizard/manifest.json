@@ -1,0 +1,13 @@
+{
+  "domain": "roehn_wizard",
+  "name": "Roehn Wizard UDP",
+  "version": "0.1.0",
+  "documentation": "https://github.com/devprbtt/roehn_dinplug",
+  "issue_tracker": "https://github.com/devprbtt/roehn_dinplug/issues",
+  "config_flow": true,
+  "iot_class": "local_polling",
+  "requirements": [],
+  "codeowners": [
+    "@devprbtt"
+  ]
+}
