@@ -104,7 +104,6 @@ class RoehnShadeCover(CoordinatorEntity[RoehnCoordinator], CoverEntity):
             description.extended_model,
             description.hsnet_id,
             description.driver_info.model_base_name if description.driver_info else None,
-            description.driver_info.image if description.driver_info else None,
         )
         self._address = description.hsnet_id if description.hsnet_id > 0 else description.device_id
 

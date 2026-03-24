@@ -1,6 +1,6 @@
-# Roehn Wizard UDP
+# ROEHN DINPLUG
 
-Home Assistant custom integration for Roehn Wizard processors over UDP.
+Home Assistant custom integration for ROEHN DINPLUG processors over UDP.
 
 ## Installation
 
@@ -8,10 +8,10 @@ Home Assistant custom integration for Roehn Wizard processors over UDP.
 
 1. In HACS, open the menu for custom repositories.
 2. Add this repository as an `Integration`.
-3. Download `Roehn Wizard UDP`.
+3. Download `ROEHN DINPLUG`.
 4. Restart Home Assistant.
 5. Go to `Settings -> Devices & Services -> Add Integration`.
-6. Search for `Roehn Wizard UDP` and complete the config flow.
+6. Search for `ROEHN DINPLUG` and complete the config flow.
 
 ### Manual
 

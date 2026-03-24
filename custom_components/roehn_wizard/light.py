@@ -99,7 +99,6 @@ class RoehnDimmerLight(CoordinatorEntity[RoehnCoordinator], LightEntity):
             description.extended_model,
             description.hsnet_id,
             description.driver_info.model_base_name if description.driver_info else None,
-            description.driver_info.image if description.driver_info else None,
         )
         if description.supports_brightness:
             self._attr_color_mode = ColorMode.BRIGHTNESS

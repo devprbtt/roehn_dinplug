@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Connect Roehn Wizard processor",
+        "title": "Connect ROEHN DINPLUG processor",
         "data": {
           "name": "Name",
           "host": "Host",

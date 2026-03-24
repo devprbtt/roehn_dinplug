@@ -1,12 +1,10 @@
-"""The Roehn Wizard integration."""
+"""The ROEHN DINPLUG integration."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.components.http import StaticPathConfig
 from homeassistant.const import CONF_HOST, CONF_NAME, CONF_PORT
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
@@ -24,11 +22,10 @@ class RoehnRuntimeData:
 
     coordinator: RoehnCoordinator
     resources: ResourcesIndex
-    images_url_base: str
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Roehn Wizard from a config entry."""
+    """Set up ROEHN DINPLUG from a config entry."""
     host = entry.data[CONF_HOST]
     port = entry.data[CONF_PORT]
     scan_interval = entry.data[CONF_SCAN_INTERVAL]
@@ -40,11 +37,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         client=client,
         update_interval_seconds=scan_interval,
     )
-    domain_data = hass.data.setdefault(DOMAIN, {})
-    images_url_base = domain_data.get("images_url_base")
-    if images_url_base is None:
-        images_url_base = await _async_register_images_path(hass)
-        domain_data["images_url_base"] = images_url_base
     resources = await hass.async_add_executor_job(load_resources_index)
 
     try:
@@ -56,7 +48,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry.runtime_data = RoehnRuntimeData(
         coordinator=coordinator,
         resources=resources,
-        images_url_base=images_url_base,
     )
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
@@ -88,12 +79,11 @@ def module_device_info(
     ext_model: str,
     hsnet_id: int,
     model_base_name: str | None = None,
-    driver_image: str | None = None,
 ) -> DeviceInfo:
     """Return device info for a module connected to the processor."""
     base_name = (model_base_name or "").strip() or ext_model or model or f"Module {serial_hex}"
     module_name = f"{hsnet_id} {base_name}"
-    model_id = Path(driver_image).stem if driver_image else _normalize_model_id(base_name)
+    model_id = _normalize_model_id(base_name)
     return DeviceInfo(
         manufacturer=MANUFACTURER,
         model=base_name,
@@ -102,16 +92,6 @@ def module_device_info(
         identifiers={(DOMAIN, f"module:{serial_hex}")},
         via_device=(DOMAIN, f"{entry.data[CONF_HOST]}:{entry.data[CONF_PORT]}"),
     )
-
-
-async def _async_register_images_path(hass: HomeAssistant) -> str:
-    """Expose bundled module images so entities can reference them locally."""
-    images_dir = Path(__file__).resolve().parent / "data" / "images"
-    images_url_base = f"/api/{DOMAIN}/images"
-    await hass.http.async_register_static_paths(
-        [StaticPathConfig(images_url_base, str(images_dir), cache_headers=False)]
-    )
-    return images_url_base
 
 
 def _normalize_model_id(value: str) -> str:

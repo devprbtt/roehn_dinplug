@@ -23,7 +23,6 @@ class ModuleEntityDescription:
     model: str
     extended_model: str
     driver_info: ModuleDriverInfo | None
-    image_url: str | None
     device_id: int
     hsnet_id: int
 
@@ -63,11 +62,11 @@ async def async_setup_entry(
             ModuleStatusSensor(
                 coordinator,
                 entry,
-                _describe_module(device, runtime.resources, runtime.images_url_base),
+                _describe_module(device, runtime.resources),
             )
         )
         known_modules.add(device.serial_hex)
-        for keypad_desc in _describe_keypad_buttons(device, runtime.resources, runtime.images_url_base):
+        for keypad_desc in _describe_keypad_buttons(device, runtime.resources):
             entities.append(KeypadButtonActionSensor(coordinator, entry, keypad_desc))
             known_keypad_buttons.add((keypad_desc.serial_hex, keypad_desc.button_id))
 
@@ -86,11 +85,11 @@ async def async_setup_entry(
                     ModuleStatusSensor(
                         coordinator,
                         entry,
-                        _describe_module(device, runtime.resources, runtime.images_url_base),
+                        _describe_module(device, runtime.resources),
                     )
                 )
 
-            for keypad_desc in _describe_keypad_buttons(device, runtime.resources, runtime.images_url_base):
+            for keypad_desc in _describe_keypad_buttons(device, runtime.resources):
                 key = (keypad_desc.serial_hex, keypad_desc.button_id)
                 if key in known_keypad_buttons:
                     continue
@@ -252,9 +251,7 @@ class ModuleStatusSensor(RoehnSensorBase):
             module.extended_model,
             module.hsnet_id,
             module.driver_info.model_base_name if module.driver_info else None,
-            module.driver_info.image if module.driver_info else None,
         )
-        self._attr_entity_picture = module.image_url
 
     @property
     def native_value(self) -> int | None:
@@ -310,8 +307,6 @@ class ModuleStatusSensor(RoehnSensorBase):
                     "driver_type_category": driver.type_category or 0,
                     "driver_max_units": driver.max_units or 0,
                     "driver_max_units_in_scene": driver.max_units_in_scene or 0,
-                    "driver_image": driver.image,
-                    "driver_image_url": self.module.image_url or "",
                     "driver_source_file": driver.source_file,
                     "driver_slots": slot_payload,
                 }
@@ -405,15 +400,13 @@ class KeypadButtonActionSensor(RoehnSensorBase):
         return None
 
 
-def _describe_module(device: DeviceInfo, resources: ResourcesIndex, images_url_base: str) -> ModuleEntityDescription:
+def _describe_module(device: DeviceInfo, resources: ResourcesIndex) -> ModuleEntityDescription:
     driver_info = resources.lookup(device.model, device.extended_model, device.dev_model)
-    image_url = _resolve_image_url(driver_info, images_url_base)
     return ModuleEntityDescription(
         serial_hex=device.serial_hex,
         model=device.model,
         extended_model=device.extended_model,
         driver_info=driver_info,
-        image_url=image_url,
         device_id=device.device_id,
         hsnet_id=device.hsnet_id,
     )
@@ -422,7 +415,6 @@ def _describe_module(device: DeviceInfo, resources: ResourcesIndex, images_url_b
 def _describe_keypad_buttons(
     device: DeviceInfo,
     resources: ResourcesIndex,
-    images_url_base: str,
 ) -> list[KeypadButtonEntityDescription]:
     if not _is_keypad_device(device, resources):
         return []
@@ -502,10 +494,3 @@ def _normalize_model_token(value: str | None) -> str:
     if not value:
         return ""
     return "".join(ch for ch in value.upper() if ch.isalnum())
-
-
-def _resolve_image_url(driver_info: ModuleDriverInfo | None, images_url_base: str) -> str | None:
-    """Return a local URL for a bundled driver image when available."""
-    if driver_info is None or not driver_info.image or not images_url_base:
-        return None
-    return f"{images_url_base}/{driver_info.image}"
